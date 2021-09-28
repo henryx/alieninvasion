@@ -2,6 +2,8 @@ package world
 
 import (
 	"bufio"
+	"errors"
+	"fmt"
 	"io"
 	"strings"
 )
@@ -17,6 +19,9 @@ func GetCities(file io.Reader) ([]*City, error) {
 		city := NewCity(split[0])
 		for _, v := range split[1:] {
 			pos := strings.Split(v, "=")
+			if len(pos) != 2 {
+				return nil, errors.New(fmt.Sprintf("position not correct %s", v))
+			}
 			near := NewCity(pos[1])
 			direction, err := GetDirection(pos[0])
 			if err != nil {
