@@ -2,21 +2,13 @@ package world
 
 import (
 	"bufio"
-	"errors"
-	"fmt"
-	"os"
+	"io"
 	"strings"
 )
 
-func GetCities(filename string) ([]*City, error) {
+func GetCities(file io.Reader) ([]*City, error) {
 	var cities []*City
 	var err error
-
-	file, err := os.Open(filename)
-	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Error opening file: %v\n", err))
-	}
-	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
