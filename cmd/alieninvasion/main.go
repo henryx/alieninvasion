@@ -9,6 +9,8 @@ import (
 )
 
 func parse(filename string) error {
+	var err error
+
 	file, err := os.Open(filename)
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error opening file: %v\n", err))
@@ -20,7 +22,7 @@ func parse(filename string) error {
 
 	}
 
-	if err := scanner.Err(); err != nil {
+	if err = scanner.Err(); err != nil {
 		return err
 	}
 
