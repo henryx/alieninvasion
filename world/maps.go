@@ -5,14 +5,14 @@ import "errors"
 // City node represents the city
 type City struct {
 	Name       string
-	Directions map[Point][]*City
+	Directions map[Point]*City
 }
 
 // NewCity is used as constructor for City
 func NewCity(city string) *City {
 	c := City{
 		Name:       city,
-		Directions: make(map[Point][]*City),
+		Directions: make(map[Point]*City),
 	}
 
 	return &c
@@ -24,7 +24,7 @@ func (c *City) AddNear(city *City, direction Point) error {
 		return errors.New("cannot add the same city")
 	}
 
-	c.Directions[direction] = append(c.Directions[direction], city)
+	c.Directions[direction] = city
 
 	return nil
 }
