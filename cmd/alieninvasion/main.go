@@ -43,4 +43,6 @@ func main() {
 	if aliens > 2*len(cities) {
 		log.Fatalf("Aliens are greater than the double of cities")
 	}
+
+	world.Invade(&cities, aliens)
 }
