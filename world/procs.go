@@ -26,12 +26,11 @@ func GetCities(file io.Reader) ([]*City, error) {
 			if len(pos) != 2 {
 				return nil, errors.New(fmt.Sprintf("position not correct %s", v))
 			}
-			near := NewCity(pos[1])
 			direction, err := GetDirection(pos[0])
 			if err != nil {
 				return nil, err
 			}
-			if err := city.AddNear(near, direction); err != nil {
+			if err := city.AddNear(pos[1], direction); err != nil {
 				return nil, err
 			}
 		}
