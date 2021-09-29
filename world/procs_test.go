@@ -34,14 +34,18 @@ func TestGetCities(t *testing.T) {
 	var err error
 
 	file := openFile(t)
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
 
 	err = writeFile(file, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	file.Seek(0, 0)
+	_, _ = file.Seek(0, 0)
 	data, err := GetCities(file)
 	if err != nil {
 		t.Fatal(err)
@@ -56,14 +60,18 @@ func TestGetCitiesFail(t *testing.T) {
 	var err error
 
 	file := openFile(t)
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
 
 	err = writeFile(file, "Foo err")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	file.Seek(0, 0)
+	_, _ = file.Seek(0, 0)
 	data, err := GetCities(file)
 	if err == nil {
 		t.Fatal(err)
@@ -89,7 +97,7 @@ func TestInvade(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	file.Seek(0, 0)
+	_, _ = file.Seek(0, 0)
 	data, err := GetCities(file)
 	if err != nil {
 		t.Fatal(err)
