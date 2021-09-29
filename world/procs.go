@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math/rand"
 	"strings"
 )
 
@@ -12,6 +13,7 @@ func GetCities(file io.Reader) ([]*City, error) {
 	var cities []*City
 	var err error
 
+	id := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -20,7 +22,7 @@ func GetCities(file io.Reader) ([]*City, error) {
 		}
 
 		split := strings.Split(line, " ")
-		city := NewCity(split[0])
+		city := NewCity(id, split[0])
 		for _, v := range split[1:] {
 			pos := strings.Split(v, "=")
 			if len(pos) != 2 {
@@ -35,6 +37,7 @@ func GetCities(file io.Reader) ([]*City, error) {
 			}
 		}
 		cities = append(cities, city)
+		id += 1
 	}
 
 	if err = scanner.Err(); err != nil {
@@ -42,4 +45,21 @@ func GetCities(file io.Reader) ([]*City, error) {
 	}
 
 	return cities, nil
+}
+
+// Invade randomly invade cities with aliens
+func Invade(cities *[]*City, aliens int) {
+	for alien := 0; alien < aliens; alien++ {
+		id := rand.Intn(len(*cities))
+		for _, city := range *cities {
+			if city.Aliens == 2 {
+				continue
+			}
+
+			if city.Id == id {
+				city.Aliens++
+				break
+			}
+		}
+	}
 }
