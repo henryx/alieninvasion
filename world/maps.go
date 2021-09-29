@@ -6,6 +6,7 @@ import "errors"
 type City struct {
 	Name       string
 	Directions map[Point]*City
+	Aliens     int
 }
 
 // NewCity is used as constructor for City
@@ -13,6 +14,7 @@ func NewCity(city string) *City {
 	c := City{
 		Name:       city,
 		Directions: make(map[Point]*City),
+		Aliens:     0,
 	}
 
 	return &c
