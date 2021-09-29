@@ -5,7 +5,7 @@ import "errors"
 // City node represents the city
 type City struct {
 	Name       string
-	Directions map[Point]*City
+	Directions map[Point]string
 	Aliens     int
 }
 
@@ -13,7 +13,7 @@ type City struct {
 func NewCity(city string) *City {
 	c := City{
 		Name:       city,
-		Directions: make(map[Point]*City),
+		Directions: make(map[Point]string),
 		Aliens:     0,
 	}
 
@@ -21,8 +21,8 @@ func NewCity(city string) *City {
 }
 
 // AddNear method add a City defining the cardinal point where is located
-func (c *City) AddNear(city *City, direction Point) error {
-	if c.Name == city.Name {
+func (c *City) AddNear(city string, direction Point) error {
+	if c.Name == city {
 		return errors.New("cannot add the same city")
 	}
 
