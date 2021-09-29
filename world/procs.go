@@ -15,6 +15,10 @@ func GetCities(file io.Reader) ([]*City, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
+		if line == "" {
+			continue
+		}
+
 		split := strings.Split(line, " ")
 		city := NewCity(split[0])
 		for _, v := range split[1:] {
