@@ -2,8 +2,6 @@ package main
 
 import (
 	"alieninvasion/world"
-	"errors"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -21,7 +19,7 @@ func main() {
 	if len(os.Args) == 3 {
 		aliens, err = strconv.Atoi(os.Args[2])
 		if err != nil {
-			log.Fatal(errors.New(fmt.Sprintf("Aliens need to be a number: %city\n", err)))
+			log.Fatalf("Aliens need to be a number: %city\n", err)
 		}
 
 		if aliens == 0 {
@@ -31,9 +29,13 @@ func main() {
 
 	file, err := os.Open(os.Args[1])
 	if err != nil {
-		log.Fatal(errors.New(fmt.Sprintf("Error opening file: %city\n", err)))
+		log.Fatalf("Error opening file: %city\n", err)
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			log.Fatalf("Error when closing file: %v\n", err)
+		}
+	}()
 
 	cities, err := world.GetCities(file)
 	if err != nil {
@@ -41,7 +43,7 @@ func main() {
 	}
 
 	if aliens > 2*len(cities) {
-		log.Fatalf("Aliens are greater than the double of cities")
+		log.Fatalf("Aliens are greater than the double of cities\n")
 	}
 
 	world.Invade(&cities, aliens)
