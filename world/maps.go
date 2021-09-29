@@ -4,14 +4,16 @@ import "errors"
 
 // City node represents the city
 type City struct {
+	Id         int
 	Name       string
 	Directions map[Point]string
 	Aliens     int
 }
 
 // NewCity is used as constructor for City
-func NewCity(city string) *City {
+func NewCity(id int, city string) *City {
 	c := City{
+		Id:         id,
 		Name:       city,
 		Directions: make(map[Point]string),
 		Aliens:     0,
