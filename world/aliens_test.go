@@ -26,3 +26,27 @@ func TestInvade(t *testing.T) {
 		t.Fatal("Aliens haven't invaded city")
 	}
 }
+
+func TestAttack(t *testing.T) {
+	file, err := createTempFile(t, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	data, err := GetCities(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	Invade(&data, len(data)*2)
+	Attack(&data)
+
+	if _, ok := data["Foo"]; ok {
+		t.Fatal("Aliens in Foo haven't destroyed the city:", data["Foo"].Aliens)
+	}
+}
