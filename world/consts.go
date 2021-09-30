@@ -1,6 +1,9 @@
 package world
 
-import "errors"
+import (
+	"errors"
+	"math/rand"
+)
 
 type Point string
 
@@ -22,4 +25,21 @@ func GetDirection(direction string) (Point, error) {
 	default:
 		return "", errors.New("invalid cardinal point")
 	}
+}
+
+func RandDirection() Point {
+	direction := rand.Intn(4)
+
+	switch direction {
+	case 0:
+		return NORTH
+	case 1:
+		return EAST
+	case 2:
+		return SOUTH
+	case 3:
+		return WEST
+	}
+
+	return ""
 }
