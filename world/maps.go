@@ -8,6 +8,7 @@ type City struct {
 	Name       string
 	Directions map[Point]string
 	Aliens     int
+	Trapped    bool
 }
 
 // NewCity is used as constructor for City
