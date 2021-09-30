@@ -5,6 +5,15 @@ import (
 	"math/rand"
 )
 
+func move(cities *map[string]*City, city *City) {
+	direction := RandDirection()
+	if near, ok := city.Directions[direction]; ok {
+		fmt.Println("An alien from", city.Name, "move to", near)
+		(*cities)[near].Aliens++
+		city.Aliens--
+	}
+}
+
 // Invade randomly invade cities with aliens
 func Invade(cities *map[string]*City, aliens int) {
 	for alien := 0; alien < aliens; alien++ {
@@ -34,12 +43,7 @@ func Attack(cities *map[string]*City) {
 				continue
 			}
 
-			direction := RandDirection()
-			if cityNear, ok := city.Directions[direction]; ok {
-				fmt.Println("An alien from", cityName, "move to", cityNear)
-				(*cities)[cityNear].Aliens++
-				city.Aliens--
-			}
+			move(cities, city)
 		}
 
 		if city.Aliens == 2 {
