@@ -1,0 +1,4 @@
+# Alien invasion
+
+---
+Alien Invasion is an exercise, done using golang. Mad aliens are about to invade the earth and you are tasked with simulating the invasion. You are given a map containing the names of cities in the non-existent world of X. The map is in a file, with one city per line. The city name is first, followed by 1-4 directions (north, south, east, or west). Each one represents a road to another city that lies in that direction. When two aliens end up in the same place, they fight, and in the process kill each other and destroy the city. When a city is destroyed, it is removed from the map, and so are any roads that lead into or out of it. Once a city is destroyed, aliens can no longer travel to or through it. This may lead to aliens getting "trapped".
