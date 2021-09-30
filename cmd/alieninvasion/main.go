@@ -47,4 +47,5 @@ func main() {
 	}
 
 	world.Invade(&cities, aliens)
+	world.Attack(&cities)
 }
