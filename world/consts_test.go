@@ -17,3 +17,11 @@ func TestGetDirection_Fail(t *testing.T) {
 
 	t.Fatal()
 }
+
+func TestRandDirection(t *testing.T) {
+	direction := RandDirection()
+
+	if direction == "" {
+		t.Fatal()
+	}
+}
