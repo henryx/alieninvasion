@@ -8,10 +8,11 @@ import (
 	"strings"
 )
 
-func GetCities(file io.Reader) ([]*City, error) {
-	var cities []*City
+func GetCities(file io.Reader) (map[string]*City, error) {
+	var cities map[string]*City
 	var err error
 
+	cities = make(map[string]*City)
 	id := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -35,7 +36,7 @@ func GetCities(file io.Reader) ([]*City, error) {
 				return nil, err
 			}
 		}
-		cities = append(cities, city)
+		cities[city.Name] = city
 		id += 1
 	}
 
