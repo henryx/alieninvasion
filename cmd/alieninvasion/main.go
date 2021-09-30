@@ -2,6 +2,7 @@ package main
 
 import (
 	"alieninvasion/world"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -48,4 +49,18 @@ func main() {
 
 	world.Invade(&cities, aliens)
 	world.Attack(&cities)
+
+	fmt.Println()
+	trapped := 0
+	for cityName, city := range cities {
+		if city.Trapped {
+			trapped++
+		}
+
+		if city.Aliens > 0 {
+			fmt.Println("In city", cityName, "remains", city.Aliens, "aliens")
+		}
+	}
+
+	fmt.Println("City trapped:", trapped)
 }
