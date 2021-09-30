@@ -1,9 +1,11 @@
 package world
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 // Invade randomly invade cities with aliens
-func Invade(cities *[]*City, aliens int) {
+func Invade(cities *map[string]*City, aliens int) {
 	for alien := 0; alien < aliens; alien++ {
 		id := rand.Intn(len(*cities))
 		for _, city := range *cities {
