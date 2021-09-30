@@ -31,6 +31,7 @@ func Invade(cities *map[string]*City, aliens int) {
 	}
 }
 
+// Attack execute attack from aliens to near cities
 func Attack(cities *map[string]*City) {
 	for cityName, city := range *cities {
 		if city.Aliens == 1 {
