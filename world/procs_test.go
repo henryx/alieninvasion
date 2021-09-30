@@ -8,44 +8,46 @@ import (
 	"testing"
 )
 
-func createTempFile(t *testing.T) *os.File {
+func createTempFile(t *testing.T, data string) (*os.File, error) {
+	var err error
+
 	dir := t.TempDir()
 	file, err := ioutil.TempFile(dir, "world.txt")
 	if err != nil {
 		t.Fatalf("unable to create temporary file for testing")
 	}
 
-	return file
-}
-
-func writeFile(file *os.File, str string) error {
 	w := bufio.NewWriter(file)
-
-	_, err := w.WriteString(fmt.Sprintf("%s\n", str))
+	_, err = w.WriteString(fmt.Sprintf("%s\n", data))
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_ = w.Flush()
 
-	return nil
+	err = w.Flush()
+	if err != nil {
+		return nil, err
+	}
+	_, err = file.Seek(0, 0)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, nil
 }
 
 func TestGetCities(t *testing.T) {
 	var err error
 
-	file := createTempFile(t)
+	file, err := createTempFile(t, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
+	if err != nil {
+		t.Fatal(err)
+	}
 	defer func() {
 		if err := file.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
-	err = writeFile(file, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	_, _ = file.Seek(0, 0)
 	data, err := GetCities(file)
 	if err != nil {
 		t.Fatal(err)
@@ -59,19 +61,16 @@ func TestGetCities(t *testing.T) {
 func TestGetCitiesFail(t *testing.T) {
 	var err error
 
-	file := createTempFile(t)
+	file, err := createTempFile(t, "Foo err")
+	if err != nil {
+		t.Fatal(err)
+	}
 	defer func() {
 		if err := file.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
-	err = writeFile(file, "Foo err")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	_, _ = file.Seek(0, 0)
 	data, err := GetCities(file)
 	if err == nil {
 		t.Fatal(err)
