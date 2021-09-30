@@ -34,27 +34,31 @@ func Invade(cities *map[string]*City, aliens int) {
 // Attack execute attack from aliens to near cities
 func Attack(cities *map[string]*City) {
 	for cityName, city := range *cities {
-		if city.Aliens == 1 {
-			if len(city.Directions) == 0 {
-				fmt.Println("Aliens in city", cityName, "are trapped!")
-				city.Trapped = true
+		switch city.Aliens {
+		case 1:
+			{
+				if len(city.Directions) == 0 {
+					fmt.Println("Aliens in city", cityName, "are trapped!")
+					city.Trapped = true
+				}
+
+				if city.Trapped {
+					continue
+				}
+
+				move(cities, city)
 			}
 
-			if city.Trapped {
-				continue
-			}
-
-			move(cities, city)
-		}
-
-		if city.Aliens == 2 {
-			fmt.Println("City", cityName, "is destroyed")
-			delete(*cities, cityName)
-			for nearCity, near := range *cities {
-				for direction, c := range near.Directions {
-					if cityName == c {
-						fmt.Println("Delete from", nearCity, "city", cityName, "at", direction)
-						delete(near.Directions, direction)
+		case 2:
+			{
+				fmt.Println("City", cityName, "is destroyed")
+				delete(*cities, cityName)
+				for nearCity, near := range *cities {
+					for direction, c := range near.Directions {
+						if cityName == c {
+							fmt.Println("Delete from", nearCity, "city", cityName, "at", direction)
+							delete(near.Directions, direction)
+						}
 					}
 				}
 			}
