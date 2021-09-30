@@ -5,7 +5,7 @@ import "testing"
 func TestInvade(t *testing.T) {
 	var err error
 
-	file := openFile(t)
+	file := createTempFile(t)
 	defer func() {
 		if err := file.Close(); err != nil {
 			t.Fatal(err)

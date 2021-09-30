@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func openFile(t *testing.T) *os.File {
+func createTempFile(t *testing.T) *os.File {
 	dir := t.TempDir()
 	file, err := ioutil.TempFile(dir, "world.txt")
 	if err != nil {
@@ -33,7 +33,7 @@ func writeFile(file *os.File, str string) error {
 func TestGetCities(t *testing.T) {
 	var err error
 
-	file := openFile(t)
+	file := createTempFile(t)
 	defer func() {
 		if err := file.Close(); err != nil {
 			t.Fatal(err)
@@ -59,7 +59,7 @@ func TestGetCities(t *testing.T) {
 func TestGetCitiesFail(t *testing.T) {
 	var err error
 
-	file := openFile(t)
+	file := createTempFile(t)
 	defer func() {
 		if err := file.Close(); err != nil {
 			t.Fatal(err)
