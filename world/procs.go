@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// GetCities retrieve cities from map and sets their neighbors
 func GetCities(file io.Reader) (map[string]*City, error) {
 	var cities map[string]*City
 	var err error

@@ -12,6 +12,8 @@ const SOUTH Point = "south"
 const EAST Point = "east"
 const WEST Point = "west"
 
+// GetDirection return a Point constant based by cardinal point string passed. If string is not
+// compliant, it returns an error
 func GetDirection(direction string) (Point, error) {
 	switch direction {
 	case "north":
@@ -27,6 +29,7 @@ func GetDirection(direction string) (Point, error) {
 	}
 }
 
+// RandDirection returns a Point constant chosen randomically
 func RandDirection() Point {
 	direction := rand.Intn(4)
 

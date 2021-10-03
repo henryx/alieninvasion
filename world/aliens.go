@@ -5,6 +5,7 @@ import (
 	"math/rand"
 )
 
+// move move an alien from one city to its neighbors
 func move(cities *map[string]*City, city *City) {
 	direction := RandDirection()
 	if near, ok := city.Directions[direction]; ok {
