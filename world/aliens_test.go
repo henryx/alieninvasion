@@ -22,7 +22,7 @@ func TestInvade(t *testing.T) {
 
 	Invade(&data, len(data)*2)
 
-	if data["Foo"].Aliens == 0 {
+	if len(data["Foo"].Aliens) == 0 {
 		t.Fatal("Aliens haven't invaded city")
 	}
 }
