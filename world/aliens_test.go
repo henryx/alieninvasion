@@ -5,7 +5,7 @@ import "testing"
 func TestInvade(t *testing.T) {
 	var err error
 
-	file, err := createTempFile(t, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
+	file, err := createTempFile(t.TempDir(), "Foo north=Bar east=Hou south=Qu-ux west=Baz")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,7 +28,7 @@ func TestInvade(t *testing.T) {
 }
 
 func TestAttack(t *testing.T) {
-	file, err := createTempFile(t, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
+	file, err := createTempFile(t.TempDir(), "Foo north=Bar east=Hou south=Qu-ux west=Baz")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -2,19 +2,19 @@ package world
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
 )
 
-func createTempFile(t *testing.T, data string) (*os.File, error) {
+func createTempFile(dir, data string) (*os.File, error) {
 	var err error
 
-	dir := t.TempDir()
 	file, err := ioutil.TempFile(dir, "world.txt")
 	if err != nil {
-		t.Fatalf("unable to create temporary file for testing")
+		return nil, errors.New("unable to create temporary file for testing")
 	}
 
 	w := bufio.NewWriter(file)
@@ -38,7 +38,7 @@ func createTempFile(t *testing.T, data string) (*os.File, error) {
 func TestGetCities(t *testing.T) {
 	var err error
 
-	file, err := createTempFile(t, "Foo north=Bar east=Hou south=Qu-ux west=Baz")
+	file, err := createTempFile(t.TempDir(), "Foo north=Bar east=Hou south=Qu-ux west=Baz")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func TestGetCities(t *testing.T) {
 func TestGetCitiesFail(t *testing.T) {
 	var err error
 
-	file, err := createTempFile(t, "Foo err")
+	file, err := createTempFile(t.TempDir(), "Foo err")
 	if err != nil {
 		t.Fatal(err)
 	}
