@@ -7,7 +7,7 @@ type City struct {
 	Id         int
 	Name       string
 	Directions map[Point]string
-	Aliens     int
+	Aliens     []int
 	Trapped    bool
 }
 
@@ -17,7 +17,7 @@ func NewCity(id int, city string) *City {
 		Id:         id,
 		Name:       city,
 		Directions: make(map[Point]string),
-		Aliens:     0,
+		Aliens:     []int{},
 	}
 
 	return &c
