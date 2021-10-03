@@ -54,8 +54,8 @@ func main() {
 			trapped++
 		}
 
-		if city.Aliens > 0 {
-			fmt.Println("In city", cityName, "remains", city.Aliens, "aliens")
+		if len(city.Aliens) > 0 {
+			fmt.Println("In city", cityName, "remains", len(city.Aliens), "aliens")
 		}
 	}
 
