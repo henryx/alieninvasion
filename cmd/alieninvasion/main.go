@@ -2,33 +2,30 @@ package main
 
 import (
 	"alieninvasion/world"
+	"flag"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
 func main() {
 	var err error
-	var aliens = 16
+	var aliens int
+	var fileName string
 
-	if len(os.Args) < 2 {
-		log.Printf("Usage: %v <worldmap> [aliens]\n", os.Args[0])
-		os.Exit(1)
+	flag.IntVar(&aliens, "aliens", 16, "number of aliens invading (default 16)")
+	flag.StringVar(&fileName, "world", "", "a file used as world map input")
+	flag.Parse()
+
+	if aliens == 0 {
+		log.Fatal("Number of aliens can't be 0")
 	}
 
-	if len(os.Args) == 3 {
-		aliens, err = strconv.Atoi(os.Args[2])
-		if err != nil {
-			log.Fatalf("Aliens need to be a number: %city\n", err)
-		}
-
-		if aliens == 0 {
-			log.Fatal("Aliens can't be 0")
-		}
+	if fileName == "" {
+		log.Fatal("World map isn't passed")
 	}
 
-	file, err := os.Open(os.Args[1])
+	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatalf("Error opening file: %city\n", err)
 	}
