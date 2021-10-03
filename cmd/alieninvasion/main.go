@@ -27,7 +27,7 @@ func main() {
 
 	file, err := os.Open(fileName)
 	if err != nil {
-		log.Fatalf("Error opening file: %city\n", err)
+		log.Fatalf("Error opening file: %v\n", err)
 	}
 	defer func() {
 		if err := file.Close(); err != nil {
